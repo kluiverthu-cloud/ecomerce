@@ -1,0 +1,192 @@
+// Schema de Prisma para E-Commerce de Productos de Computación
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== USUARIOS ====================
+
+model User {
+  id          String      @id @default(uuid())
+  email       String      @unique
+  nombre      String
+  apellido    String
+  telefono    String?
+  password    String
+  role        Role        @default(CUSTOMER)
+  activo      Boolean     @default(true)
+  direcciones Direccion[]
+  ordenes     Orden[]
+  carrito     Carrito?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+model Direccion {
+  id           String  @id @default(uuid())
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  nombre       String  // Nombre para identificar la dirección (Casa, Oficina, etc.)
+  calle        String
+  numero       String
+  ciudad       String
+  estado       String
+  codigoPostal String
+  pais         String  @default("Bolivia")
+  referencia   String? // Referencias adicionales
+  principal    Boolean @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ==================== PRODUCTOS ====================
+
+model Categoria {
+  id          String     @id @default(uuid())
+  nombre      String     @unique
+  slug        String     @unique
+  descripcion String?
+  imagen      String?
+  activo      Boolean    @default(true)
+  productos   Producto[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Marca {
+  id        String     @id @default(uuid())
+  nombre    String     @unique
+  slug      String     @unique
+  logo      String?
+  activo    Boolean    @default(true)
+  productos Producto[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Producto {
+  id            String           @id @default(uuid())
+  nombre        String
+  slug          String           @unique
+  descripcion   String
+  precio        Decimal          @db.Decimal(10, 2)
+  precioOferta  Decimal?         @db.Decimal(10, 2)
+  stock         Int              @default(0)
+  sku           String           @unique
+  imagenes      String[]
+  destacado     Boolean          @default(false)
+  activo        Boolean          @default(true)
+  categoria     Categoria        @relation(fields: [categoriaId], references: [id])
+  categoriaId   String
+  marca         Marca            @relation(fields: [marcaId], references: [id])
+  marcaId       String
+  specs         Especificacion[]
+  itemsCarrito  CarritoItem[]
+  itemsOrden    OrdenItem[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([categoriaId])
+  @@index([marcaId])
+  @@index([slug])
+}
+
+model Especificacion {
+  id         String   @id @default(uuid())
+  nombre     String   // Ej: "RAM", "Procesador", "Pantalla"
+  valor      String   // Ej: "16GB", "Intel i7", "15.6 pulgadas"
+  producto   Producto @relation(fields: [productoId], references: [id], onDelete: Cascade)
+  productoId String
+
+  @@index([productoId])
+}
+
+// ==================== CARRITO ====================
+
+model Carrito {
+  id        String        @id @default(uuid())
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String        @unique
+  items     CarritoItem[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model CarritoItem {
+  id         String   @id @default(uuid())
+  carrito    Carrito  @relation(fields: [carritoId], references: [id], onDelete: Cascade)
+  carritoId  String
+  producto   Producto @relation(fields: [productoId], references: [id])
+  productoId String
+  cantidad   Int      @default(1)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([carritoId, productoId])
+  @@index([carritoId])
+  @@index([productoId])
+}
+
+// ==================== ÓRDENES ====================
+
+model Orden {
+  id             String      @id @default(uuid())
+  numeroOrden    String      @unique
+  user           User        @relation(fields: [userId], references: [id])
+  userId         String
+  items          OrdenItem[]
+  subtotal       Decimal     @db.Decimal(10, 2)
+  envio          Decimal     @db.Decimal(10, 2) @default(0)
+  total          Decimal     @db.Decimal(10, 2)
+  estado         EstadoOrden @default(PENDIENTE)
+  metodoPago     MetodoPago  @default(QR)
+  comprobantePago String?    // URL de la imagen del comprobante QR
+  direccionEnvio Json        // Snapshot de la dirección al momento de la orden
+  notas          String?     // Notas adicionales del cliente
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([estado])
+  @@index([numeroOrden])
+}
+
+model OrdenItem {
+  id            String   @id @default(uuid())
+  orden         Orden    @relation(fields: [ordenId], references: [id], onDelete: Cascade)
+  ordenId       String
+  producto      Producto @relation(fields: [productoId], references: [id])
+  productoId    String
+  nombreProducto String   // Snapshot del nombre al momento de la compra
+  cantidad      Int
+  precioUnitario Decimal  @db.Decimal(10, 2)
+  subtotal      Decimal  @db.Decimal(10, 2)
+
+  @@index([ordenId])
+  @@index([productoId])
+}
+
+enum EstadoOrden {
+  PENDIENTE     // Esperando pago
+  VERIFICANDO   // Verificando comprobante QR
+  PAGADO        // Pago confirmado
+  PROCESANDO    // Preparando pedido
+  ENVIADO       // En camino
+  ENTREGADO     // Entregado al cliente
+  CANCELADO     // Orden cancelada
+}
+
+enum MetodoPago {
+  QR            // Pago por QR
+  TRANSFERENCIA // Transferencia bancaria
+  EFECTIVO      // Pago contra entrega
+}
