@@ -98,7 +98,7 @@ export default function RegistroPage() {
                     value={formData.nombre}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                     placeholder="Juan"
                   />
                 </div>
@@ -114,7 +114,7 @@ export default function RegistroPage() {
                   value={formData.apellido}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                   placeholder="Pérez"
                 />
               </div>
@@ -135,7 +135,7 @@ export default function RegistroPage() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                   placeholder="tu@email.com"
                 />
               </div>
@@ -155,7 +155,7 @@ export default function RegistroPage() {
                   name="telefono"
                   value={formData.telefono}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                   placeholder="70123456"
                 />
               </div>
@@ -177,7 +177,7 @@ export default function RegistroPage() {
                   onChange={handleChange}
                   required
                   minLength={6}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-12 py-3 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                   placeholder="••••••••"
                 />
                 <button
@@ -205,7 +205,7 @@ export default function RegistroPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                   placeholder="••••••••"
                 />
               </div>

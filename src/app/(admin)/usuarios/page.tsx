@@ -89,24 +89,24 @@ export default async function UsuariosPage({ searchParams }: Props) {
       {/* Tabla */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-100">
+          <thead className="bg-blue-50/50 border-b border-blue-100">
             <tr>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Usuario
               </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Teléfono
               </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Rol
               </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Órdenes
               </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Registro
               </th>
             </tr>

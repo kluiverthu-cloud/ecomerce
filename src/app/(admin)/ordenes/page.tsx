@@ -42,14 +42,14 @@ import { Eye, Package } from "lucide-react"; interface Props {
       {/* Tabla de Órdenes */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-100">
+          <thead className="bg-blue-50/50 border-b border-blue-100">
             <tr>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Orden</th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Cliente</th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Items</th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Total</th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Estado</th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Fecha</th>
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">Orden</th>
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">Cliente</th>
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">Items</th>
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">Total</th>
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">Estado</th>
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">Fecha</th>
             </tr>
           </thead>
           <tbody>

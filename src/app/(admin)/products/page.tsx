@@ -82,27 +82,27 @@ export default async function ProductsPage({ searchParams }: Props) {
       {/* Tabla de Productos */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-100">
+          <thead className="bg-blue-50/50 border-b border-blue-100">
             <tr>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Producto
               </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 SKU
               </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Categoría
               </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Precio
               </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Stock
               </th>
-              <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-left px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="text-right px-6 py-4 text-sm font-semibold text-gray-600">
+              <th className="text-right px-6 py-4 text-sm font-bold text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>

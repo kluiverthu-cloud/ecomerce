@@ -28,17 +28,24 @@ export default async function ShopHome() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-white mb-12">
-        <h1 className="text-5xl font-bold mb-4">Bienvenido a Tech Store</h1>
-        <p className="text-xl opacity-90 mb-8">
-          La mejor tecnología al mejor precio.
-        </p>
-        <Link
-          href="/productos"
-          className="bg-white text-blue-600 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors inline-block"
-        >
-          Ver Productos
-        </Link>
+      <section className="relative overflow-hidden bg-[#f0f7ff] rounded-3xl p-12 mb-12 border border-blue-50">
+        <div className="relative z-10">
+          <h1 className="text-6xl font-black mb-4 tracking-tighter text-slate-900">
+            Bienvenido a <span className="bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">Tech Store</span>
+          </h1>
+          <p className="text-xl text-slate-600 mb-8 max-w-xl font-medium">
+            Descubre la mejor selección de tecnología con el respaldo y la confianza que mereces.
+          </p>
+          <Link
+            href="/productos"
+            className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all transform hover:-translate-y-1 inline-block"
+          >
+            Explorar Tienda
+          </Link>
+        </div>
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-100/50 to-transparent pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
       </section>
 
       {/* Categories Grid */}

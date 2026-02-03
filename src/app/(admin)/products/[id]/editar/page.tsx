@@ -215,7 +215,7 @@ export default function EditarProductoPage({ params }: Props) {
                                 value={formData.nombre}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                                 placeholder="Ej: Laptop Gaming ASUS ROG"
                             />
                         </div>
@@ -230,7 +230,7 @@ export default function EditarProductoPage({ params }: Props) {
                                 onChange={handleChange}
                                 required
                                 rows={4}
-                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                                 placeholder="Describe el producto..."
                             />
                         </div>
@@ -244,7 +244,7 @@ export default function EditarProductoPage({ params }: Props) {
                                 value={formData.categoriaId}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                             >
                                 <option value="">Seleccionar categoría</option>
                                 {categorias.map((cat) => (
@@ -264,7 +264,7 @@ export default function EditarProductoPage({ params }: Props) {
                                 value={formData.marcaId}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                             >
                                 <option value="">Seleccionar marca</option>
                                 {marcas.map((marca) => (
@@ -294,7 +294,7 @@ export default function EditarProductoPage({ params }: Props) {
                                 required
                                 min="0"
                                 step="0.01"
-                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                                 placeholder="0.00"
                             />
                         </div>
@@ -310,7 +310,7 @@ export default function EditarProductoPage({ params }: Props) {
                                 onChange={handleChange}
                                 min="0"
                                 step="0.01"
-                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                                 placeholder="Opcional"
                             />
                         </div>
@@ -326,7 +326,7 @@ export default function EditarProductoPage({ params }: Props) {
                                 onChange={handleChange}
                                 required
                                 min="0"
-                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                                 placeholder="0"
                             />
                         </div>
@@ -402,14 +402,14 @@ export default function EditarProductoPage({ params }: Props) {
                                         value={spec.nombre}
                                         onChange={(e) => updateSpec(index, "nombre", e.target.value)}
                                         placeholder="Ej: RAM"
-                                        className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="flex-1 px-3 py-2 border border-blue-100 bg-white rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                                     />
                                     <input
                                         type="text"
                                         value={spec.valor}
                                         onChange={(e) => updateSpec(index, "valor", e.target.value)}
                                         placeholder="Ej: 16GB DDR4"
-                                        className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="flex-1 px-3 py-2 border border-blue-100 bg-white rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                                     />
                                     <button
                                         type="button"

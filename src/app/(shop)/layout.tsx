@@ -9,7 +9,7 @@ export default function ShopLayout({
     return (
         <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-1 bg-gray-50">
+            <main className="flex-1 bg-[#f8fbff]">
                 {children}
             </main>
             <Footer />

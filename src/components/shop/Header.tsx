@@ -13,31 +13,18 @@ export function Header() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   return (
-    <header className="border-b bg-white sticky top-0 z-50">
+    <header className="border-b border-b-blue-100 bg-[#f8fbff] sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold text-gray-900">
-          TECH STORE
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="bg-blue-600 p-1.5 rounded-lg rotate-3 group-hover:rotate-0 transition-transform">
+            <span className="text-white font-black text-xl italic leading-none">T</span>
+          </div>
+          <span className="text-2xl font-black tracking-tighter bg-gradient-to-r from-blue-700 to-indigo-800 bg-clip-text text-transparent">
+            TECH<span className="text-blue-600">STORE</span>
+          </span>
         </Link>
 
         <nav className="hidden md:flex gap-6">
-          <Link
-            href="/productos"
-            className="text-gray-600 hover:text-black transition-colors"
-          >
-            Productos
-          </Link>
-          <Link
-            href="/categorias"
-            className="text-gray-600 hover:text-black transition-colors"
-          >
-            Categorías
-          </Link>
-          <Link
-            href="/ofertas"
-            className="text-gray-600 hover:text-black transition-colors"
-          >
-            Ofertas
-          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -139,27 +126,6 @@ export function Header() {
       {/* Menu móvil expandido */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t bg-white px-4 py-4 space-y-4">
-          <Link
-            href="/productos"
-            className="block text-gray-600 hover:text-black"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Productos
-          </Link>
-          <Link
-            href="/categorias"
-            className="block text-gray-600 hover:text-black"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Categorías
-          </Link>
-          <Link
-            href="/ofertas"
-            className="block text-gray-600 hover:text-black"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Ofertas
-          </Link>
         </div>
       )}
     </header>

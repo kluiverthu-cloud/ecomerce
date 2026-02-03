@@ -291,14 +291,12 @@ export default function CheckoutPage() {
         {/* Progress bar */}
         <div className="flex items-center gap-2 mb-8">
           <div
-            className={`flex-1 h-2 rounded-full ${
-              step === "datos" ? "bg-blue-600" : "bg-blue-600"
-            }`}
+            className={`flex-1 h-2 rounded-full ${step === "datos" ? "bg-blue-600" : "bg-blue-600"
+              }`}
           />
           <div
-            className={`flex-1 h-2 rounded-full ${
-              step === "pago" ? "bg-blue-600" : "bg-gray-200"
-            }`}
+            className={`flex-1 h-2 rounded-full ${step === "pago" ? "bg-blue-600" : "bg-gray-200"
+              }`}
           />
         </div>
 
@@ -329,7 +327,7 @@ export default function CheckoutPage() {
                       name="nombre"
                       value={datosEnvio.nombre}
                       onChange={handleDatosChange}
-                      className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                     />
                   </div>
                   <div>
@@ -341,7 +339,7 @@ export default function CheckoutPage() {
                       name="apellido"
                       value={datosEnvio.apellido}
                       onChange={handleDatosChange}
-                      className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                     />
                   </div>
                 </div>
@@ -360,7 +358,7 @@ export default function CheckoutPage() {
                       name="telefono"
                       value={datosEnvio.telefono}
                       onChange={handleDatosChange}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full pl-10 pr-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                       placeholder="70123456"
                     />
                   </div>
@@ -375,7 +373,7 @@ export default function CheckoutPage() {
                     name="ciudad"
                     value={datosEnvio.ciudad}
                     onChange={handleDatosChange}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                     placeholder="La Paz, Cochabamba, Santa Cruz..."
                   />
                 </div>
@@ -389,7 +387,7 @@ export default function CheckoutPage() {
                     value={datosEnvio.direccion}
                     onChange={handleDatosChange}
                     rows={2}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                     placeholder="Calle, número, zona, edificio..."
                   />
                 </div>
@@ -403,7 +401,7 @@ export default function CheckoutPage() {
                     name="referencia"
                     value={datosEnvio.referencia}
                     onChange={handleDatosChange}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 border border-blue-100 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900 shadow-sm"
                     placeholder="Cerca de..., frente a..."
                   />
                 </div>
