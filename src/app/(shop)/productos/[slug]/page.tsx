@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AddToCartButton } from "@/components/shop/AddToCartButton";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -168,12 +169,20 @@ export default async function ProductoDetalle({ params }: Props) {
 
           {/* Botones de acción */}
           <div className="flex gap-4 mb-8">
-            <button
-              disabled={producto.stock === 0}
-              className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-xl font-semibold hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-            >
-              Agregar al Carrito
-            </button>
+            <div className="flex-1">
+              <AddToCartButton
+                product={{
+                  id: producto.id,
+                  nombre: producto.nombre,
+                  slug: producto.slug,
+                  precio: Number(producto.precio),
+                  precioOferta: producto.precioOferta ? Number(producto.precioOferta) : null,
+                  imagen: producto.imagenes[0] || "",
+                  stock: producto.stock,
+                }}
+                className="w-full"
+              />
+            </div>
             <button className="px-6 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
               ❤️
             </button>

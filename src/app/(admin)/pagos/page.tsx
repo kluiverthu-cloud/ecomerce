@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { QrCode, Eye, Check, X, Clock, Upload } from "lucide-react";
+import { OrderActions } from "@/components/admin/OrderActions";
 
 async function getOrdenesPendientes() {
   return await prisma.orden.findMany({
@@ -142,9 +143,8 @@ export default async function PagosPage() {
                       </div>
                       <div className="text-right">
                         <span
-                          className={`px-2 py-1 rounded text-xs font-medium ${
-                            estadoColors[orden.estado]
-                          }`}
+                          className={`px-2 py-1 rounded text-xs font-medium ${estadoColors[orden.estado]
+                            }`}
                         >
                           {orden.estado}
                         </span>
@@ -196,28 +196,10 @@ export default async function PagosPage() {
                     <div className="flex gap-2">
                       {orden.estado === "VERIFICANDO" && (
                         <>
-                          <form action={`/api/ordenes/${orden.id}`} method="POST">
-                            <input type="hidden" name="estado" value="PAGADO" />
-                            <button
-                              type="submit"
-                              className="flex items-center gap-1 px-3 py-1.5 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors"
-                            >
-                              <Check size={14} />
-                              Aprobar Pago
-                            </button>
-                          </form>
-                          <form action={`/api/ordenes/${orden.id}`} method="POST">
-                            <input type="hidden" name="estado" value="PENDIENTE" />
-                            <button
-                              type="submit"
-                              className="flex items-center gap-1 px-3 py-1.5 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition-colors"
-                            >
-                              <X size={14} />
-                              Rechazar
-                            </button>
-                          </form>
+                          <OrderActions ordenId={orden.id} />
                         </>
                       )}
+
                       <Link
                         href={`/ordenes/${orden.id}`}
                         className="flex items-center gap-1 px-3 py-1.5 border border-gray-200 text-gray-700 text-sm rounded-lg hover:bg-gray-50 transition-colors"
@@ -261,9 +243,8 @@ export default async function PagosPage() {
                     </div>
                     <div className="text-right">
                       <span
-                        className={`px-2 py-1 rounded text-xs font-medium ${
-                          estadoColors[orden.estado]
-                        }`}
+                        className={`px-2 py-1 rounded text-xs font-medium ${estadoColors[orden.estado]
+                          }`}
                       >
                         {orden.estado}
                       </span>

@@ -139,21 +139,22 @@ model CarritoItem {
 // ==================== ÓRDENES ====================
 
 model Orden {
-  id             String      @id @default(uuid())
-  numeroOrden    String      @unique
-  user           User        @relation(fields: [userId], references: [id])
-  userId         String
-  items          OrdenItem[]
-  subtotal       Decimal     @db.Decimal(10, 2)
-  envio          Decimal     @db.Decimal(10, 2) @default(0)
-  total          Decimal     @db.Decimal(10, 2)
-  estado         EstadoOrden @default(PENDIENTE)
-  metodoPago     MetodoPago  @default(QR)
-  comprobantePago String?    // URL de la imagen del comprobante QR
-  direccionEnvio Json        // Snapshot de la dirección al momento de la orden
-  notas          String?     // Notas adicionales del cliente
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  id               String      @id @default(uuid())
+  numeroOrden      String      @unique
+  user             User        @relation(fields: [userId], references: [id])
+  userId           String
+  items            OrdenItem[]
+  subtotal         Decimal     @db.Decimal(10, 2)
+  envio            Decimal     @db.Decimal(10, 2) @default(0)
+  total            Decimal     @db.Decimal(10, 2)
+  estado           EstadoOrden @default(PENDIENTE)
+  metodoPago       MetodoPago  @default(QR)
+  comprobantePago  String?     // URL de la imagen del comprobante QR
+  direccionEnvio   String      // Dirección de envío formateada
+  telefonoContacto String?     // Teléfono de contacto para la entrega
+  notas            String?     // Notas adicionales del cliente
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
 
   @@index([userId])
   @@index([estado])
@@ -189,4 +190,14 @@ enum MetodoPago {
   QR            // Pago por QR
   TRANSFERENCIA // Transferencia bancaria
   EFECTIVO      // Pago contra entrega
+}
+
+// ==================== CONFIGURACIÓN ====================
+
+model Configuracion {
+  id        String   @id @default(uuid())
+  clave     String   @unique
+  valor     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

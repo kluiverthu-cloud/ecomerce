@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Upload, Save, Loader2, QrCode } from "lucide-react";
+import { ArrowLeft, Save, Loader2, QrCode, CheckCircle } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 
 export default function ConfigurarQRPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [loadingConfig, setLoadingConfig] = useState(true);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
   const [qrImage, setQrImage] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     banco: "",
@@ -17,24 +20,79 @@ export default function ConfigurarQRPage() {
     instrucciones: "",
   });
 
+  // Cargar configuración existente
+  useEffect(() => {
+    fetch("/api/config/qr")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && !data.error) {
+          setFormData({
+            banco: data.banco || "",
+            titular: data.titular || "",
+            nroCuenta: data.nroCuenta || "",
+            instrucciones: data.instrucciones || "",
+          });
+          if (data.qrImageUrl) {
+            setQrImage([data.qrImageUrl]);
+          }
+        }
+      })
+      .catch(console.error)
+      .finally(() => setLoadingConfig(false));
+  }, []);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setError("");
+    setSuccess(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
+    setSuccess(false);
 
-    // Aquí guardarías la configuración en la base de datos
-    // Por ahora solo simulamos el guardado
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("/api/config/qr", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          qrImageUrl: qrImage[0] || null,
+          ...formData,
+        }),
+      });
 
-    setLoading(false);
-    router.push("/pagos");
+      if (res.ok) {
+        setSuccess(true);
+        setTimeout(() => {
+          router.push("/pagos");
+        }, 1500);
+      } else {
+        const data = await res.json();
+        setError(data.error || "Error al guardar la configuración");
+      }
+    } catch (err) {
+      setError("Error de conexión");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loadingConfig) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 size={40} className="animate-spin text-blue-600" />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -54,6 +112,19 @@ export default function ConfigurarQRPage() {
           </p>
         </div>
       </div>
+
+      {success && (
+        <div className="mb-6 bg-green-50 text-green-700 px-4 py-3 rounded-lg flex items-center gap-2">
+          <CheckCircle size={20} />
+          Configuración guardada correctamente
+        </div>
+      )}
+
+      {error && (
+        <div className="mb-6 bg-red-50 text-red-600 px-4 py-3 rounded-lg">
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Imagen QR */}
@@ -86,13 +157,14 @@ export default function ConfigurarQRPage() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Banco / Servicio
+                Banco / Servicio *
               </label>
               <input
                 type="text"
                 name="banco"
                 value={formData.banco}
                 onChange={handleChange}
+                required
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ej: Tigo Money, BNB, Banco Unión"
               />
@@ -100,13 +172,14 @@ export default function ConfigurarQRPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Nombre del Titular
+                Nombre del Titular *
               </label>
               <input
                 type="text"
                 name="titular"
                 value={formData.titular}
                 onChange={handleChange}
+                required
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ej: Tech Store S.R.L."
               />
@@ -114,13 +187,14 @@ export default function ConfigurarQRPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Número de Cuenta / Celular
+                Número de Cuenta / Celular *
               </label>
               <input
                 type="text"
                 name="nroCuenta"
                 value={formData.nroCuenta}
                 onChange={handleChange}
+                required
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ej: 70123456 o 1234567890"
               />

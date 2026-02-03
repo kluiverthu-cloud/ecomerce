@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/ordenes - Crear orden desde el carrito
+// POST /api/ordenes - Crear orden (desde carrito del cliente)
 export async function POST(request: NextRequest) {
   try {
     const auth = await authenticateRequest(request);
@@ -78,73 +78,49 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { direccionId, metodoPago = "QR", notas } = body;
+    const { items, datosEnvio, comprobantePago, metodoPago = "QR", subtotal, total } = body;
 
-    // Obtener carrito con items
-    const carrito = await prisma.carrito.findUnique({
-      where: { userId: auth.user.id },
-      include: {
-        items: {
-          include: {
-            producto: true,
-          },
-        },
-      },
-    });
-
-    if (!carrito || carrito.items.length === 0) {
+    // Validar que hay items
+    if (!items || items.length === 0) {
       return errorResponse("El carrito está vacío", 400);
     }
 
-    // Filtrar items activos
-    const itemsActivos = carrito.items.filter((item) => item.producto.activo);
+    // Validar datos de envío
+    if (!datosEnvio || !datosEnvio.direccion || !datosEnvio.ciudad) {
+      return errorResponse("Datos de envío incompletos", 400);
+    }
 
-    if (itemsActivos.length === 0) {
-      return errorResponse("No hay productos disponibles en el carrito", 400);
+    // Validar comprobante
+    if (!comprobantePago) {
+      return errorResponse("Comprobante de pago requerido", 400);
     }
 
     // Verificar stock de todos los productos
-    for (const item of itemsActivos) {
-      if (item.producto.stock < item.cantidad) {
+    for (const item of items) {
+      const producto = await prisma.producto.findUnique({
+        where: { id: item.productoId },
+        select: { stock: true, nombre: true, activo: true },
+      });
+
+      if (!producto || !producto.activo) {
         return errorResponse(
-          `Stock insuficiente para "${item.producto.nombre}". Disponible: ${item.producto.stock}`,
+          `Producto no disponible: ${item.nombreProducto}`,
+          400
+        );
+      }
+
+      if (producto.stock < item.cantidad) {
+        return errorResponse(
+          `Stock insuficiente para "${producto.nombre}". Disponible: ${producto.stock}`,
           400
         );
       }
     }
 
-    // Obtener dirección
-    let direccionEnvio: any = null;
-
-    if (direccionId) {
-      const direccion = await prisma.direccion.findUnique({
-        where: { id: direccionId },
-      });
-
-      if (!direccion || direccion.userId !== auth.user.id) {
-        return errorResponse("Dirección no válida", 400);
-      }
-
-      direccionEnvio = {
-        nombre: direccion.nombre,
-        calle: direccion.calle,
-        numero: direccion.numero,
-        ciudad: direccion.ciudad,
-        estado: direccion.estado,
-        codigoPostal: direccion.codigoPostal,
-        pais: direccion.pais,
-        referencia: direccion.referencia,
-      };
-    }
-
-    // Calcular totales
-    const subtotal = itemsActivos.reduce((acc, item) => {
-      const precio = item.producto.precioOferta || item.producto.precio;
-      return acc + Number(precio) * item.cantidad;
-    }, 0);
-
-    const envio = 0; // Configurable según lógica de negocio
-    const total = subtotal + envio;
+    // Construir dirección de envío
+    const direccionEnvio = `${datosEnvio.direccion}, ${datosEnvio.ciudad}${
+      datosEnvio.referencia ? ` (Ref: ${datosEnvio.referencia})` : ""
+    }`;
 
     // Crear orden en una transacción
     const orden = await prisma.$transaction(async (tx) => {
@@ -153,21 +129,21 @@ export async function POST(request: NextRequest) {
         data: {
           numeroOrden: generateOrderNumber(),
           userId: auth.user.id,
+          estado: "VERIFICANDO", // Pendiente de verificación del comprobante
           subtotal,
-          envio,
+          envio: 0,
           total,
           metodoPago: metodoPago as any,
-          direccionEnvio: direccionEnvio || {},
-          notas: notas || null,
+          comprobantePago,
+          direccionEnvio,
+          telefonoContacto: datosEnvio.telefono || null,
           items: {
-            create: itemsActivos.map((item) => ({
+            create: items.map((item: any) => ({
               productoId: item.productoId,
-              nombreProducto: item.producto.nombre,
+              nombreProducto: item.nombreProducto,
               cantidad: item.cantidad,
-              precioUnitario: item.producto.precioOferta || item.producto.precio,
-              subtotal:
-                Number(item.producto.precioOferta || item.producto.precio) *
-                item.cantidad,
+              precioUnitario: item.precio,
+              subtotal: item.precio * item.cantidad,
             })),
           },
         },
@@ -183,7 +159,7 @@ export async function POST(request: NextRequest) {
       });
 
       // Actualizar stock de productos
-      for (const item of itemsActivos) {
+      for (const item of items) {
         await tx.producto.update({
           where: { id: item.productoId },
           data: {
@@ -192,15 +168,10 @@ export async function POST(request: NextRequest) {
         });
       }
 
-      // Vaciar carrito
-      await tx.carritoItem.deleteMany({
-        where: { carritoId: carrito.id },
-      });
-
       return nuevaOrden;
     });
 
-    return successResponse(orden, 201);
+    return successResponse({ orden }, 201);
   } catch (error) {
     console.error("Error al crear orden:", error);
     return errorResponse("Error al crear orden", 500);

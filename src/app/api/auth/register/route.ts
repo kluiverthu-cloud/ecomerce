@@ -60,6 +60,19 @@ export async function POST(request: NextRequest) {
       data: { userId: user.id },
     });
 
+    // Obtener usuario completo con telefono
+    const fullUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: {
+        id: true,
+        email: true,
+        nombre: true,
+        apellido: true,
+        telefono: true,
+        role: true,
+      },
+    });
+
     // Generar token
     const token = generateToken({
       userId: user.id,
@@ -70,7 +83,7 @@ export async function POST(request: NextRequest) {
     return successResponse(
       {
         token,
-        user,
+        user: fullUser,
       },
       201
     );
