@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { Plus, Edit, Trash2, Eye } from "lucide-react";
+import { Plus } from "lucide-react";
+import { ProductActions } from "@/components/admin/ProductActions";
 
 interface Props {
   searchParams: Promise<{ page?: string; search?: string }>;
@@ -159,51 +160,37 @@ export default async function ProductsPage({ searchParams }: Props) {
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      producto.stock === 0
-                        ? "bg-red-100 text-red-700"
-                        : producto.stock <= 5
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${producto.stock === 0
+                      ? "bg-red-100 text-red-700"
+                      : producto.stock <= 5
                         ? "bg-yellow-100 text-yellow-700"
                         : "bg-green-100 text-green-700"
-                    }`}
+                      }`}
                   >
                     {producto.stock} uds
                   </span>
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      producto.activo
-                        ? "bg-green-100 text-green-700"
-                        : "bg-gray-100 text-gray-600"
-                    }`}
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${producto.activo
+                      ? "bg-green-100 text-green-700"
+                      : "bg-gray-100 text-gray-600"
+                      }`}
                   >
                     {producto.activo ? "Activo" : "Inactivo"}
                   </span>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex justify-end gap-2">
-                    <Link
-                      href={`/productos/${producto.slug}`}
-                      target="_blank"
-                      className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                      title="Ver en tienda"
-                    >
-                      <Eye size={18} />
-                    </Link>
-                    <Link
-                      href={`/products/${producto.id}/editar`}
-                      className="p-2 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-                      title="Editar"
-                    >
-                      <Edit size={18} />
-                    </Link>
-                    <button
-                      className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                      title="Eliminar"
-                    >
-                      <Trash2 size={18} />
-                    </button>
+
+                    <ProductActions
+                      product={{
+                        id: producto.id,
+                        slug: producto.slug,
+                        activo: producto.activo,
+                        nombre: producto.nombre
+                      }}
+                    />
                   </div>
                 </td>
               </tr>
@@ -223,9 +210,8 @@ export default async function ProductsPage({ searchParams }: Props) {
         <div className="flex justify-center gap-2">
           {page > 1 && (
             <Link
-              href={`/products?page=${page - 1}${
-                params.search ? `&search=${params.search}` : ""
-              }`}
+              href={`/products?page=${page - 1}${params.search ? `&search=${params.search}` : ""
+                }`}
               className="px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
             >
               Anterior
@@ -236,9 +222,8 @@ export default async function ProductsPage({ searchParams }: Props) {
           </span>
           {page < totalPages && (
             <Link
-              href={`/products?page=${page + 1}${
-                params.search ? `&search=${params.search}` : ""
-              }`}
+              href={`/products?page=${page + 1}${params.search ? `&search=${params.search}` : ""
+                }`}
               className="px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
             >
               Siguiente

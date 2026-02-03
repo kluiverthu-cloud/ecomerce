@@ -58,31 +58,28 @@ export default async function UsuariosPage({ searchParams }: Props) {
         <div className="flex gap-2">
           <Link
             href="/usuarios"
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              !params.role
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${!params.role
+              ? "bg-blue-600 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
           >
             Todos
           </Link>
           <Link
             href="/usuarios?role=CUSTOMER"
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              params.role === "CUSTOMER"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${params.role === "CUSTOMER"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
           >
             Clientes
           </Link>
           <Link
             href="/usuarios?role=ADMIN"
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              params.role === "ADMIN"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${params.role === "ADMIN"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
           >
             Administradores
           </Link>
@@ -112,9 +109,6 @@ export default async function UsuariosPage({ searchParams }: Props) {
               <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
                 Registro
               </th>
-              <th className="text-right px-6 py-4 text-sm font-semibold text-gray-600">
-                Acciones
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -126,11 +120,10 @@ export default async function UsuariosPage({ searchParams }: Props) {
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        usuario.role === "ADMIN"
-                          ? "bg-purple-100"
-                          : "bg-blue-100"
-                      }`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center ${usuario.role === "ADMIN"
+                        ? "bg-purple-100"
+                        : "bg-blue-100"
+                        }`}
                     >
                       {usuario.role === "ADMIN" ? (
                         <Shield size={20} className="text-purple-600" />
@@ -151,11 +144,10 @@ export default async function UsuariosPage({ searchParams }: Props) {
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`px-2 py-1 rounded text-xs font-medium ${
-                      usuario.role === "ADMIN"
-                        ? "bg-purple-100 text-purple-700"
-                        : "bg-blue-100 text-blue-700"
-                    }`}
+                    className={`px-2 py-1 rounded text-xs font-medium ${usuario.role === "ADMIN"
+                      ? "bg-purple-100 text-purple-700"
+                      : "bg-blue-100 text-blue-700"
+                      }`}
                   >
                     {usuario.role === "ADMIN" ? "Admin" : "Cliente"}
                   </span>
@@ -165,11 +157,10 @@ export default async function UsuariosPage({ searchParams }: Props) {
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`px-2 py-1 rounded text-xs font-medium ${
-                      usuario.activo
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
-                    }`}
+                    className={`px-2 py-1 rounded text-xs font-medium ${usuario.activo
+                      ? "bg-green-100 text-green-700"
+                      : "bg-red-100 text-red-700"
+                      }`}
                   >
                     {usuario.activo ? "Activo" : "Inactivo"}
                   </span>
@@ -180,16 +171,6 @@ export default async function UsuariosPage({ searchParams }: Props) {
                     month: "short",
                     year: "numeric",
                   })}
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex justify-end">
-                    <Link
-                      href={`/usuarios/${usuario.id}`}
-                      className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                    >
-                      <Eye size={18} />
-                    </Link>
-                  </div>
                 </td>
               </tr>
             ))}

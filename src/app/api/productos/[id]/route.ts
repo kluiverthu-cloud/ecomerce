@@ -184,10 +184,9 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
       return errorResponse("Producto no encontrado", 404);
     }
 
-    // Soft delete - marcar como inactivo
-    await prisma.producto.update({
+    // Hard delete
+    await prisma.producto.delete({
       where: { id },
-      data: { activo: false },
     });
 
     return successResponse({ message: "Producto eliminado correctamente" });

@@ -14,7 +14,6 @@ import {
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
   { name: "Productos", icon: ShoppingBag, href: "/products" },
-  { name: "Categorías", icon: FolderTree, href: "/categorias" },
   { name: "Órdenes", icon: Package, href: "/ordenes" },
   { name: "Pagos QR", icon: QrCode, href: "/pagos" },
   { name: "Usuarios", icon: Users, href: "/usuarios" },
@@ -41,11 +40,10 @@ export function Sidebar() {
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-200 ${
-                    isActive
+                  className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-200 ${isActive
                       ? "bg-white text-[#1e0a3c] font-semibold shadow-lg translate-x-1"
                       : "text-gray-300 hover:bg-white/10 hover:text-white hover:translate-x-1"
-                  }`}
+                    }`}
                 >
                   <item.icon
                     size={20}
