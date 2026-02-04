@@ -112,9 +112,13 @@ export default function NuevoProductoPage() {
         specs: specs.filter((s) => s.nombre && s.valor),
       };
 
+      const token = localStorage.getItem("token");
       const res = await fetch("/api/productos", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(payload),
       });
 
