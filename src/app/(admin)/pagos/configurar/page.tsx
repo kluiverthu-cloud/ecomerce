@@ -165,7 +165,7 @@ export default function ConfigurarQRPage() {
                 value={formData.banco}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ej: Tigo Money, BNB, Banco Unión"
               />
             </div>
@@ -180,7 +180,7 @@ export default function ConfigurarQRPage() {
                 value={formData.titular}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ej: Tech Store S.R.L."
               />
             </div>
@@ -195,7 +195,7 @@ export default function ConfigurarQRPage() {
                 value={formData.nroCuenta}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ej: 70123456 o 1234567890"
               />
             </div>
@@ -209,7 +209,7 @@ export default function ConfigurarQRPage() {
                 value={formData.instrucciones}
                 onChange={handleChange}
                 rows={3}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ej: Enviar captura de comprobante por WhatsApp al 70123456"
               />
             </div>

@@ -98,7 +98,7 @@ export default async function ProductosPage({ searchParams }: Props) {
                   name="search"
                   defaultValue={params.search || ""}
                   placeholder="Buscar productos..."
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </form>
             </div>
@@ -111,11 +111,10 @@ export default async function ProductosPage({ searchParams }: Props) {
               <div className="space-y-2">
                 <Link
                   href="/productos"
-                  className={`block text-sm ${
-                    !params.categoria
+                  className={`block text-sm ${!params.categoria
                       ? "text-blue-600 font-medium"
                       : "text-gray-600 hover:text-blue-600"
-                  }`}
+                    }`}
                 >
                   Todas las categorías
                 </Link>
@@ -123,11 +122,10 @@ export default async function ProductosPage({ searchParams }: Props) {
                   <Link
                     key={cat.id}
                     href={`/productos?categoria=${cat.slug}`}
-                    className={`block text-sm ${
-                      params.categoria === cat.slug
+                    className={`block text-sm ${params.categoria === cat.slug
                         ? "text-blue-600 font-medium"
                         : "text-gray-600 hover:text-blue-600"
-                    }`}
+                      }`}
                   >
                     {cat.nombre}
                   </Link>
@@ -147,25 +145,22 @@ export default async function ProductosPage({ searchParams }: Props) {
                       ? `/productos?categoria=${params.categoria}`
                       : "/productos"
                   }
-                  className={`block text-sm ${
-                    !params.marca
+                  className={`block text-sm ${!params.marca
                       ? "text-blue-600 font-medium"
                       : "text-gray-600 hover:text-blue-600"
-                  }`}
+                    }`}
                 >
                   Todas las marcas
                 </Link>
                 {marcas.map((marca) => (
                   <Link
                     key={marca.id}
-                    href={`/productos?${
-                      params.categoria ? `categoria=${params.categoria}&` : ""
-                    }marca=${marca.slug}`}
-                    className={`block text-sm ${
-                      params.marca === marca.slug
+                    href={`/productos?${params.categoria ? `categoria=${params.categoria}&` : ""
+                      }marca=${marca.slug}`}
+                    className={`block text-sm ${params.marca === marca.slug
                         ? "text-blue-600 font-medium"
                         : "text-gray-600 hover:text-blue-600"
-                    }`}
+                      }`}
                   >
                     {marca.nombre}
                   </Link>
@@ -181,7 +176,7 @@ export default async function ProductosPage({ searchParams }: Props) {
             <h1 className="text-2xl font-bold">
               {params.categoria
                 ? categorias.find((c) => c.slug === params.categoria)?.nombre ||
-                  "Productos"
+                "Productos"
                 : "Todos los Productos"}
             </h1>
             <span className="text-gray-500 text-sm">{total} productos</span>
@@ -252,11 +247,9 @@ export default async function ProductosPage({ searchParams }: Props) {
                 <div className="flex justify-center gap-2 mt-8">
                   {page > 1 && (
                     <Link
-                      href={`/productos?${
-                        params.categoria ? `categoria=${params.categoria}&` : ""
-                      }${params.marca ? `marca=${params.marca}&` : ""}page=${
-                        page - 1
-                      }`}
+                      href={`/productos?${params.categoria ? `categoria=${params.categoria}&` : ""
+                        }${params.marca ? `marca=${params.marca}&` : ""}page=${page - 1
+                        }`}
                       className="px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
                     >
                       Anterior
@@ -267,11 +260,9 @@ export default async function ProductosPage({ searchParams }: Props) {
                   </span>
                   {page < totalPages && (
                     <Link
-                      href={`/productos?${
-                        params.categoria ? `categoria=${params.categoria}&` : ""
-                      }${params.marca ? `marca=${params.marca}&` : ""}page=${
-                        page + 1
-                      }`}
+                      href={`/productos?${params.categoria ? `categoria=${params.categoria}&` : ""
+                        }${params.marca ? `marca=${params.marca}&` : ""}page=${page + 1
+                        }`}
                       className="px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
                     >
                       Siguiente
