@@ -3,6 +3,8 @@ import Link from "next/link";
 import { QrCode, Eye, Check, X, Clock, Upload } from "lucide-react";
 import { OrderActions } from "@/components/admin/OrderActions";
 
+export const dynamic = "force-dynamic";
+
 async function getOrdenesPendientes() {
   return await prisma.orden.findMany({
     where: {
@@ -34,14 +36,32 @@ async function getOrdenesVerificadas() {
 }
 
 async function getConfigQR() {
-  // Aquí podrías tener una tabla de configuración para la imagen QR
-  // Por ahora retornamos un placeholder
-  return {
-    qrImageUrl: null,
-    banco: "Banco Ejemplo",
-    titular: "Tech Store S.R.L.",
-    nroCuenta: "1234567890",
-  };
+  try {
+    const config = await prisma.configuracion.findFirst({
+      where: { clave: "qr_pago" },
+    });
+
+    if (config && config.valor) {
+      // Manejar tanto si es un objeto JSON como si es un string guardado en el campo JSON
+      const valor = config.valor;
+      return typeof valor === "string" ? JSON.parse(valor) : valor;
+    }
+
+    return {
+      qrImageUrl: null,
+      banco: "Tigo Money",
+      titular: "Tech Store S.R.L.",
+      nroCuenta: "70123456",
+    };
+  } catch (error) {
+    console.error("Error al obtener config QR:", error);
+    return {
+      qrImageUrl: null,
+      banco: "Error al cargar",
+      titular: "-",
+      nroCuenta: "-",
+    };
+  }
 }
 
 export default async function PagosPage() {
@@ -79,7 +99,7 @@ export default async function PagosPage() {
               Código QR de Pago
             </h2>
 
-            <div className="aspect-square bg-gray-100 rounded-xl flex items-center justify-center mb-4 border-2 border-dashed border-gray-300">
+            <div className="aspect-square bg-gray-100 rounded-xl flex items-center justify-center mb-4 border-2 border-dashed border-gray-300 overflow-hidden">
               {configQR.qrImageUrl ? (
                 <img
                   src={configQR.qrImageUrl}
@@ -154,21 +174,31 @@ export default async function PagosPage() {
                       </div>
                     </div>
 
-                    {/* Comprobante */}
+                    {/* Comprobante con Miniatura */}
                     {orden.comprobantePago ? (
-                      <div className="bg-blue-50 p-3 rounded-lg mb-3">
-                        <p className="text-sm text-blue-700 font-medium mb-2">
-                          📎 Comprobante adjunto
-                        </p>
-                        <a
-                          href={orden.comprobantePago}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
-                        >
-                          <Eye size={14} />
-                          Ver comprobante
-                        </a>
+                      <div className="bg-blue-50 p-4 rounded-lg mb-3 flex gap-4 items-center">
+                        <div className="w-20 h-20 bg-white rounded border border-blue-100 overflow-hidden flex-shrink-0">
+                          <img
+                            src={orden.comprobantePago}
+                            alt="Vista previa comprobante"
+                            className="w-full h-full object-cover cursor-pointer hover:scale-110 transition-transform"
+                            onClick={() => window.open(orden.comprobantePago!, '_blank')}
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm text-blue-700 font-medium mb-1">
+                            📎 Comprobante adjunto
+                          </p>
+                          <a
+                            href={orden.comprobantePago}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
+                          >
+                            <Eye size={14} />
+                            Ver en pantalla completa
+                          </a>
+                        </div>
                       </div>
                     ) : (
                       <div className="bg-yellow-50 p-3 rounded-lg mb-3">
