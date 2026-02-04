@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AddToCartButton } from "@/components/shop/AddToCartButton";
+import { ProductGallery } from "@/components/shop/ProductGallery";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -68,38 +69,8 @@ export default async function ProductoDetalle({ params }: Props) {
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Galería de Imágenes */}
-        <div>
-          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-            <div className="h-96 flex items-center justify-center bg-gray-50">
-              {producto.imagenes.length > 0 ? (
-                <img
-                  src={producto.imagenes[0]}
-                  alt={producto.nombre}
-                  className="max-h-full max-w-full object-contain"
-                />
-              ) : (
-                <span className="text-gray-300 text-8xl">📦</span>
-              )}
-            </div>
-          </div>
-          {producto.imagenes.length > 1 && (
-            <div className="grid grid-cols-4 gap-2 mt-4">
-              {producto.imagenes.slice(0, 4).map((img, i) => (
-                <div
-                  key={i}
-                  className="h-20 bg-white rounded-lg border border-gray-100 overflow-hidden cursor-pointer hover:border-blue-500"
-                >
-                  <img
-                    src={img}
-                    alt={`${producto.nombre} ${i + 1}`}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        {/* Galería de Imágenes Interactiva */}
+        <ProductGallery imagenes={producto.imagenes} nombre={producto.nombre} />
 
         {/* Información del Producto */}
         <div>
@@ -132,7 +103,7 @@ export default async function ProductoDetalle({ params }: Props) {
                   {Math.round(
                     ((Number(producto.precio) - Number(producto.precioOferta)) /
                       Number(producto.precio)) *
-                      100
+                    100
                   )}
                   % OFF
                 </span>
@@ -183,9 +154,6 @@ export default async function ProductoDetalle({ params }: Props) {
                 className="w-full"
               />
             </div>
-            <button className="px-6 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
-              ❤️
-            </button>
           </div>
 
           {/* Especificaciones */}
