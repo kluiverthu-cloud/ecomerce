@@ -54,8 +54,8 @@ export async function POST(request: NextRequest) {
       { expiresIn: "7d" }
     );
 
-    // Retornar usuario y token (sin password)
-    return NextResponse.json({
+    // Crear la respuesta
+    const response = NextResponse.json({
       user: {
         id: user.id,
         email: user.email,
@@ -66,6 +66,17 @@ export async function POST(request: NextRequest) {
       },
       token,
     });
+
+    // Guardar token en una cookie para el Middleware
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7, // 7 días
+      path: "/",
+    });
+
+    return response;
   } catch (error) {
     console.error("Error en login:", error);
     return NextResponse.json(
