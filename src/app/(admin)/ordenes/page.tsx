@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { Eye, Package } from "lucide-react"; interface Props {
+import { Eye, Package } from "lucide-react";
+
+export const dynamic = "force-dynamic"; interface Props {
   searchParams: Promise<{ estado?: string; page?: string }>;
 }async function getOrdenes(estado?: string, page: number = 1) {
   const limit = 15;

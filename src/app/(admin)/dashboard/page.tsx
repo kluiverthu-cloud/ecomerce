@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import { Users, DollarSign, ShoppingBag, Package } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 async function getStats() {
   const [totalUsuarios, totalProductos, totalOrdenes, ordenesPendientes] =
     await Promise.all([
@@ -148,9 +150,8 @@ export default async function DashboardPage() {
                   </div>
                   <div className="text-right">
                     <span
-                      className={`px-2 py-1 rounded text-xs font-medium ${
-                        estadoColors[orden.estado]
-                      }`}
+                      className={`px-2 py-1 rounded text-xs font-medium ${estadoColors[orden.estado]
+                        }`}
                     >
                       {orden.estado}
                     </span>
@@ -202,11 +203,10 @@ export default async function DashboardPage() {
                     </div>
                   </div>
                   <span
-                    className={`px-3 py-1 rounded-full text-sm font-bold ${
-                      producto.stock === 0
+                    className={`px-3 py-1 rounded-full text-sm font-bold ${producto.stock === 0
                         ? "bg-red-100 text-red-700"
                         : "bg-yellow-100 text-yellow-700"
-                    }`}
+                      }`}
                   >
                     {producto.stock} uds
                   </span>
