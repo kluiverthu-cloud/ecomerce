@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Eye, EyeOff, Loader2, Mail, Lock, User, Phone } from "lucide-react";
 
-export default function RegistroPage() {
+function RegistroForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/";
@@ -250,3 +250,16 @@ export default function RegistroPage() {
     </div>
   );
 }
+
+export default function RegistroPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-[80vh] flex items-center justify-center">
+        <Loader2 className="animate-spin text-blue-600" size={40} />
+      </div>
+    }>
+      <RegistroForm />
+    </Suspense>
+  );
+}
+
