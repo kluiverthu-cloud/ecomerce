@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, User, Menu, X, LogOut, Package } from "lucide-react";
+import { ShoppingCart, User, Menu, X, LogOut, Package, LayoutDashboard } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
@@ -28,6 +28,16 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          {/* Botón Dashboard (Solo para Admin) */}
+          {isAuthenticated && user?.role === "ADMIN" && (
+            <Link
+              href="/dashboard"
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-slate-800 text-white rounded-lg hover:bg-slate-900 transition-colors text-sm font-medium mr-1"
+            >
+              <LayoutDashboard size={18} />
+              Admin
+            </Link>
+          )}
           {/* Carrito */}
           <Link
             href="/carrito"
