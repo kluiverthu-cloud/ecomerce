@@ -5,6 +5,7 @@ import { ShoppingCart, User, Menu, X, LogOut, Package, LayoutDashboard } from "l
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Header() {
   const { itemCount } = useCart();
@@ -28,6 +29,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           {/* Botón Dashboard (Solo para Admin) */}
           {isAuthenticated && user?.role === "ADMIN" && (
             <Link

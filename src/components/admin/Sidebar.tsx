@@ -10,6 +10,7 @@ import {
   Package,
   FolderTree,
 } from "lucide-react";
+import { ThemeToggle } from "../ThemeToggle";
 
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
@@ -64,15 +65,18 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      {/* Link a la tienda */}
-      <div className="p-4 z-10">
+      {/* Link a la tienda y Tema */}
+      <div className="p-4 z-10 flex gap-2">
         <Link
           href="/"
           target="_blank"
-          className="flex items-center justify-center gap-2 w-full py-3 bg-blue-100/50 rounded-lg text-sm text-blue-700 font-medium hover:bg-blue-100 transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-100/50 rounded-lg text-sm text-blue-700 font-medium hover:bg-blue-100 transition-colors"
         >
-          🛒 Ver Tienda
+          🛒 Tienda
         </Link>
+        <div className="bg-white/50 rounded-lg flex items-center justify-center px-1">
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* Decorative background circle effect */}
