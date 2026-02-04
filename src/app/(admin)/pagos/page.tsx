@@ -178,12 +178,18 @@ export default async function PagosPage() {
                     {orden.comprobantePago ? (
                       <div className="bg-blue-50 p-4 rounded-lg mb-3 flex gap-4 items-center">
                         <div className="w-20 h-20 bg-white rounded border border-blue-100 overflow-hidden flex-shrink-0">
-                          <img
-                            src={orden.comprobantePago}
-                            alt="Vista previa comprobante"
-                            className="w-full h-full object-cover cursor-pointer hover:scale-110 transition-transform"
-                            onClick={() => window.open(orden.comprobantePago!, '_blank')}
-                          />
+                          <a
+                            href={orden.comprobantePago}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block w-full h-full cursor-pointer hover:scale-110 transition-transform"
+                          >
+                            <img
+                              src={orden.comprobantePago}
+                              alt="Vista previa comprobante"
+                              className="w-full h-full object-cover"
+                            />
+                          </a>
                         </div>
                         <div className="flex-1">
                           <p className="text-sm text-blue-700 font-medium mb-1">
